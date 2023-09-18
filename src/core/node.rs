@@ -1,5 +1,5 @@
 use super::message::{Message, MessageType};
-use std::io::Result;
+use std::{io::Result, net::TcpStream};
 
 #[derive(Debug)]
 pub struct Node {
@@ -14,6 +14,9 @@ impl Node {
             connections: Vec::new(),
         })
     }
+
+    pub fn handle_stream(&self, stream: TcpStream) {}
+
     fn handle_message(&mut self, message: Message) {
         match message.message_type {
             MessageType::Connect => self.send_message(message.sender_id, MessageType::ConnectOk),
