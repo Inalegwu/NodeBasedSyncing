@@ -23,8 +23,11 @@ impl Node {
 
     pub fn handle_stream(&self, stream: TcpStream) {
         let bufReader = BufReader::new(&stream);
+
         println!("{:?}", stream)
     }
+
+    fn establish_connection(&self) {}
 
     fn handle_message(&mut self, message: Message) {
         match message.message_type {
@@ -55,7 +58,7 @@ impl Node {
                 println!("Node updated , {} connections left", self.connections.len())
             }
             MessageType::DisconnectOk => (),
-        }
+        };
     }
 
     fn send_data(&self, data: String) {
