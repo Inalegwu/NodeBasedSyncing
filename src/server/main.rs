@@ -21,5 +21,6 @@ fn main() {
             Ok(stream) => stream,
             Err(error) => panic!("Something went wrong while reading the stream {:?}", error),
         };
+        node.handle_stream(stream)
     }
 }

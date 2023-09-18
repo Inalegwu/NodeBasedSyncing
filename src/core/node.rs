@@ -23,6 +23,7 @@ impl Node {
 
     pub fn handle_stream(&self, stream: TcpStream) {
         let bufReader = BufReader::new(&stream);
+        println!("{:?}", stream)
     }
 
     fn handle_message(&mut self, message: Message) {
