@@ -37,7 +37,7 @@ impl Node {
                     break;
                 }
                 Ok(_) => {
-                    println!("{:?}", line.get(0))
+                    println!("{:?}", line);
                 }
                 Err(err) => {
                     eprintln!("Error reading from socket : {}", err);
