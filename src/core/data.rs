@@ -1,6 +1,7 @@
+use serde::{Deserialize, Serialize};
 use std::io::Result;
 
-#[derive(Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Data {
     id: String,
     content: String,

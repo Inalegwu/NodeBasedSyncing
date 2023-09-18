@@ -2,11 +2,12 @@ use super::{
     data::Data,
     message::{Message, MessageType},
 };
+use serde_json;
 use std::{fmt::Debug, io::BufReader, io::Result, net::TcpStream};
 
 #[derive(Debug)]
 pub struct Node {
-    id: String,
+    pub id: String,
     connections: Vec<String>,
     data: Vec<Data>,
 }
@@ -34,7 +35,14 @@ impl Node {
                     self.connections.len()
                 )
             }
-            MessageType::Send => self.send_data(&self.data),
+            MessageType::Send => {
+                let data = serde_json::to_string(&self.data);
+                let data = match data {
+                    Ok(data) => data,
+                    Err(error) => panic!("Error occurred serdeing data {:?}", error),
+                };
+                self.send_data(data)
+            }
             MessageType::SendOk => todo!(),
             MessageType::Disconnect => {
                 for i in 0..self.connections.len() {
@@ -49,7 +57,7 @@ impl Node {
         }
     }
 
-    fn send_data(&self, data: &Vec<Data>) {
+    fn send_data(&self, data: String) {
         println!("{:?}", data)
     }
 

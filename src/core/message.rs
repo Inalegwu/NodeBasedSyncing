@@ -1,6 +1,7 @@
+use serde::{Deserialize, Serialize};
 use std::io::Result;
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub enum MessageType {
     Connect,
     ConnectOk,
@@ -10,7 +11,7 @@ pub enum MessageType {
     DisconnectOk,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Message {
     pub id: String,
     pub sender_id: String,

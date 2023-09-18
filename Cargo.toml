@@ -9,6 +9,12 @@ edition = "2021"
 version="1.4.1"
 features=["v4"]
 
+[dependencies.serde]
+version="1.0.188"
+features=["derive"]
+
+[dependencies.serde_json]
+version="1.0.107"
 
 [[bin]]
 name="client"
