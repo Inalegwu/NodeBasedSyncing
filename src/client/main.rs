@@ -1,14 +1,17 @@
-use std::net::{TcpListener, TcpStream};
+use std::net::TcpListener;
 use sync::core::node;
 
 fn main() {
-    let listener = TcpListener::bind("127.0.0.1:80");
+    let listener = TcpListener::bind("127.0.0.1:8080");
 
-    let listener=match listener{
-        Ok(listener)=>listener,
-        Err(error)=>panic!("Something went wrong starting the listening process : {:?}",error)
+    let listener = match listener {
+        Ok(listener) => listener,
+        Err(error) => panic!(
+            "Something went wrong starting the listening process : {:?}",
+            error
+        ),
     };
-    
+
     let node = node::Node::new().unwrap();
 
     println!("{:?}", node);
