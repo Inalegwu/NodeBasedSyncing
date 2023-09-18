@@ -8,3 +8,8 @@ edition = "2021"
 [dependencies.uuid]
 version="1.4.1"
 features=["v4"]
+
+
+[[bin]]
+name="client"
+path="src/client/main.rs"
