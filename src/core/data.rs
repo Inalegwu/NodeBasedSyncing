@@ -1,5 +1,6 @@
 use std::io::Result;
 
+#[derive(Debug)]
 pub struct Data {
     id: String,
     content: String,

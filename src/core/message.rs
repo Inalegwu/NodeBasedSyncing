@@ -4,6 +4,10 @@ use std::io::Result;
 pub enum MessageType {
     Connect,
     ConnectOk,
+    Send,
+    SendOk,
+    Disconnect,
+    DisconnectOk,
 }
 
 #[derive(Debug)]
