@@ -3,7 +3,12 @@ use super::{
     message::{Message, MessageType},
 };
 use serde_json;
-use std::{fmt::Debug, io::BufReader, io::Result, net::TcpStream};
+use std::{
+    fmt::Debug,
+    io::Result,
+    io::{BufRead, BufReader, Write},
+    net::TcpStream,
+};
 
 #[derive(Debug)]
 pub struct Node {
@@ -22,12 +27,25 @@ impl Node {
     }
 
     pub fn handle_stream(&self, stream: TcpStream) {
-        let bufReader = BufReader::new(&stream);
+        let mut bufreader = BufReader::new(&stream);
 
-        println!("{:?}", stream)
+        loop {
+            let mut line: Vec<u8> = Vec::new();
+
+            match bufreader.read_until(b'\n', &mut line) {
+                Ok(0) => {
+                    break;
+                }
+                Ok(_) => {
+                    println!("{:?}", line.get(0))
+                }
+                Err(err) => {
+                    eprintln!("Error reading from socket : {}", err);
+                    break;
+                }
+            }
+        }
     }
-
-    fn establish_connection(&self) {}
 
     fn handle_message(&mut self, message: Message) {
         match message.message_type {

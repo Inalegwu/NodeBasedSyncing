@@ -12,6 +12,4 @@ fn main() {
     let client_node = Node::new().unwrap();
 
     client_node.handle_stream(stream);
-
-    println!("Hello wordl")
 }
