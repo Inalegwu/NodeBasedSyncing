@@ -1,5 +1,5 @@
 use std::io::Result;
-use std::net::{TcpListener, TcpStream};
+use uuid::Uuid;
 
 #[derive(Debug)]
 enum MessageType {
@@ -23,7 +23,7 @@ struct Message {
 impl Message {
     fn new(message_type: MessageType, sender_id: String, receiver_id: String) -> Result<Self> {
         return Ok(Message {
-            id: "1".to_string(),
+            id: Uuid::new_v4().to_string(),
             message_type,
             sender_id,
             receiver_id,
@@ -40,7 +40,7 @@ struct Node {
 impl Node {
     fn new() -> Result<Node> {
         Ok(Node {
-            id: "1".to_string(),
+            id: Uuid::new_v4().to_string(),
             connections: Vec::new(),
         })
     }
@@ -55,33 +55,44 @@ impl Node {
                     message.sender_id
                 );
             }
-            MessageType::DeclineConnect => {}
-            MessageType::Data => {}
-            MessageType::WillSendData => {}
-            MessageType::WillNotSendData => {}
-            MessageType::CanRecieveData => {}
-            MessageType::CanNotRecieveData => {}
+            MessageType::DeclineConnect => todo!(),
+            MessageType::Data => todo!(),
+            MessageType::WillSendData => todo!(),
+            MessageType::WillNotSendData => todo!(),
+            MessageType::CanRecieveData => todo!(),
+            MessageType::CanNotRecieveData => todo!(),
         }
     }
-    fn send_message(self, receiver_id: String, message_type: MessageType) {
-        let message: Message = Message::new(message_type, self.id, receiver_id).unwrap();
-        println!("{:?}", message)
+
+    fn send_message(&self, message: Message) {
+        println!("{:?}", message);
     }
 
-    fn send_data(&self, reciever_id: &String) {
-        let mut _connection: &String;
+    fn send_data(&self, reciever_id: &String, message_type: MessageType) {
+        let mut connection_i_know: &String;
+
         for i in 0..self.connections.len() {
             let found = self.connections.get(i).unwrap();
             if found == reciever_id {
                 println!("found Node with id : {:?}", found);
-                _connection = found;
+                connection_i_know = found;
             }
         }
+
+        let message = Message::new(message_type, self.id.clone(), connection_i_know.to_string());
+
+        self.send_message(message.unwrap())
+    }
+
+    fn my_connections(&self) {
+        println!("{:?}", self.connections);
     }
 }
 
 fn main() {
     let node = Node::new().unwrap();
 
-    node.send_message("2".to_string(), MessageType::Connect);
+    node.my_connections();
+
+    node.send_data(&"2".to_string(), MessageType::AcceptConnect)
 }
