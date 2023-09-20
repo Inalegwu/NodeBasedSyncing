@@ -11,5 +11,7 @@ fn main() {
 
     let client_node = Node::new().unwrap();
 
+    println!("Client Node with ID {} started", client_node.id);
+
     client_node.handle_stream(stream);
 }

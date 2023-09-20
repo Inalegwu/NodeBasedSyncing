@@ -14,7 +14,11 @@ fn main() {
 
     let node = Node::new().unwrap();
 
-    println!("Listening on 127.0.0.1:8080 , server id is {:?}", node.id);
+    println!(
+        "Server Node with ID {} started listening on {:?}",
+        node.id,
+        listener.local_addr().unwrap()
+    );
 
     for stream in listener.incoming() {
         let stream = match stream {
